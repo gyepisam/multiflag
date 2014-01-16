@@ -31,19 +31,38 @@ After calling
 
 	  flag.Parse()
 
+The following command line flags
+
+
 You can get the count
 
 	  fmt.Println("Verbosity:", verbosity.Count())
 
+which, given the flags:
+
+	-v -v -verbose --verbose
+
+produces the output:
+
+	Verbosity: 4
+
 or the arguments
 
 	  for _, item := range trace.Args() {
-		  fmt.Println("Tracing: " + item)
+		  fmt.Println("Tracing:", item)
 	  }
 
+which, given the flags:
 
-The examples above can be found in the file main/main.go, which can be compiled and run.
-It produces the following usage text:
+	-t parse -trace compile
+
+produces the output:
+
+	Tracing: parse
+	Tracing: compile
+
+The examples above can be found in the file main/main.go, which can also be compiled and run.
+It has the following usage text:
 
   Usage of main:
 	-t=none: Alias for trace
