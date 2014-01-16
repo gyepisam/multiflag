@@ -34,6 +34,6 @@ func main() {
 	fmt.Println("Verbosity:", verbosity.Count())
 
 	for _, item := range trace.Args() {
-		fmt.Println("Tracing: " + item)
+		fmt.Println("Tracing:", item)
 	}
 }
