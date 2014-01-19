@@ -1,0 +1,10 @@
+multiflag implements the flag.Value interface for handling repeated flag values.
+
+It is useful for boolean flags where repeated use implies greater intensity or
+values to be collected into an array.
+
+To install, run
+
+    go get github.com/gyepisam/multiflag
+
+See the multiflag.go or main.go files for further instructions and examples.
