@@ -26,12 +26,12 @@ import (
 
 func main() {
 
-	var verbosity = multiflag.NewBool("verbose", "false", "Verbosity. Repeat as necessary", "v")
-	var trace = multiflag.New("trace", "none", "Trace program sections", "t")
+	var verbosity = multiflag.Bool("verbose", "false", "Verbosity. Repeat as necessary", "v")
+	var trace = multiflag.String("trace", "none", "Trace program sections", "t")
 
 	flag.Parse()
 
-	fmt.Println("Verbosity:", verbosity.Count())
+	fmt.Println("Verbosity:", verbosity.NArg())
 
 	for _, item := range trace.Args() {
 		fmt.Println("Tracing:", item)

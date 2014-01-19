@@ -21,11 +21,11 @@ Imports, definitions, etc:
 
 A boolean variable counts flags and does not consume any arguments.
 
-	  var verbosity = multiflag.NewBool("verbose", "false", "Verbosity. Repeat as necessary", "v")
+	  var verbosity = multiflag.Bool("verbose", "false", "Verbosity. Repeat as necessary", "v")
 
-All other variables consume and collect their arguments into a string array.
+String variables consume and collect their arguments into a string array.
 
-	  var trace = multiflag.New("trace", "none", "Trace program sections", "t")
+	  var trace = multiflag.String("trace", "none", "Trace program sections", "t")
 
 After calling
 
@@ -36,7 +36,7 @@ The following command line flags
 
 You can get the count
 
-	  fmt.Println("Verbosity:", verbosity.Count())
+	  fmt.Println("Verbosity:", verbosity.NArg())
 
 which, given the flags:
 
@@ -101,10 +101,10 @@ func (v *Value) Set(s string) error {
 // Provided for flag package.
 func (v *Value) IsBoolFlag() bool { return v.isBool }
 
-// New returns a multiflag instance.
+// String returns a multiflag instance that represents string values.
 // name, value, and usage are used to initial a flag.Value.
-// aliases, if any, initialize aliases for name, with the usage text produced by the AliasUsage function.
-func New(name string, value string, usage string, aliases ...string) *Value {
+// aliases, if any, initialize aliases for name. See AliasUsage.
+func String(name string, value string, usage string, aliases ...string) *Value {
 	v := &Value{val: value}
 
 	flag.Var(v, name, usage)
@@ -116,15 +116,17 @@ func New(name string, value string, usage string, aliases ...string) *Value {
 	return v
 }
 
-// NewBool returns a multiflag instance that represents a boolean value.
-func NewBool(name string, value string, usage string, aliases ...string) *Value {
-	v := New(name, value, usage, aliases...)
+// Bool returns a multiflag instance that represents boolean values.
+// name, value, and usage are used to initial a flag.Value.
+// aliases, if any, initialize aliases for name. See AliasUsage.
+func Bool(name string, value string, usage string, aliases ...string) *Value {
+	v := String(name, value, usage, aliases...)
 	v.isBool = true
 	return v
 }
 
 // Args returns an array of collected arguments.
-// A boolean Value, created with NewBool always returns an empty array. 
+// A Bool always returns an empty array. 
 func (v *Value) Args() []string {
 	if v.isBool {
 		return []string{}
@@ -133,8 +135,8 @@ func (v *Value) Args() []string {
 	}
 }
 
-// Count returns the number of invocations
-func (v *Value) Count() int {
+// NArg returns the number of invocations
+func (v *Value) NArg() int {
 	return len(v.args)
 }
 
