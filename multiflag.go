@@ -31,7 +31,6 @@ After calling
 
 	  flag.Parse()
 
-The following command line flags
 
 You can get the count
 
